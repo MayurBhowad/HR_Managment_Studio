@@ -1,0 +1,18 @@
+{
+  "name": "stackhack_2.0",
+  "version": "1.0.0",
+  "description": "HR managment studio",
+  "main": "server.main.js",
+  "scripts": {
+    "start": "node server.main.js",
+    "dev":"nodemon server.main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bm_mayur",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8"
+  }
+}
