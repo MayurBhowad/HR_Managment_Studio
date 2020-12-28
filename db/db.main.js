@@ -12,5 +12,9 @@ const connect = () => {
     })
 }
 
+const close = () => {
+    return mongoose.disconnect();
+}
 
-module.exports = { connect };
+
+module.exports = { connect, close };
