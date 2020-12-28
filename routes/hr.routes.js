@@ -10,6 +10,7 @@ const HR = require('../db/models/hr.model');
 
 //Validations
 const ValidateAddHrInputs = require('../validations/add-hr.validations');
+const ValidateLoginHrInputs = require('../validations/login-hr.validations');
 
 
 //@route    GET /hr/testing
@@ -80,13 +81,21 @@ router.post('/add', (req, res) => {
 //@desc     login as hr 
 //@access   public
 router.post('/login', (req, res) => {
+    const { errors, isValid } = ValidateLoginHrInputs(req.body);
+
+    //check validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
     HR.findOne({ email })
         .then(hr => {
             if (!hr) {
-                return res.status(404).json({ message: "User not found!" });
+                errors.email = 'User not found!'
+                return res.status(404).json(errors);
             }
             bcrypt.compare(password, hr.password)
                 .then(isMatch => {
@@ -104,7 +113,8 @@ router.post('/login', (req, res) => {
                                 })
                             })
                     } else {
-                        return res.status(400).json({ message: 'password incorrect!' })
+                        errors.password = 'password incorrect!'
+                        return res.status(400).json(errors)
                     }
                 })
         })
@@ -114,7 +124,6 @@ router.post('/login', (req, res) => {
 //@dest     Return Current User
 //@access   Private
 router.get('/current', passport.authenticate('jwts', { session: false }), (req, res) => {
-    // console.log('get./current from users.js');
     res.json({
         id: req.user.id,
         Name: req.user.first_name,
