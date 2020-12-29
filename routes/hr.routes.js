@@ -37,8 +37,9 @@ router.post('/add', (req, res) => {
         .then(hr => {
             if (hr.permission !== 'admin') {
                 res.status(400).json({ message: 'Not Authorized!' })
+            } else {
+                addHr();
             }
-            addHr();
         })
 
     const addHr = () => {

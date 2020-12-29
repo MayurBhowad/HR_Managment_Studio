@@ -15,22 +15,22 @@ describe('hr route', () => {
             .catch(err => done(err));
     });
 
-    // it('subbmitting empty input', () => {
-    //     request(app).post('/hr/add')
-    //         .then(res => {
-    //             const body = res.body;
-    //             expect(body).toEqual({
-    //                 first_name: 'First name is required!',
-    //                 last_name: 'Last name is required!',
-    //                 email: 'Email field is required!',
-    //                 password: 'Password must be atleast 6 charecters!',
-    //                 cpassword: 'confirm password!',
-    //                 dob: 'Date of Birth is required!',
-    //                 hr_no: 'Hr number is required!',
-    //                 permission: 'permission not defined!'
-    //             });
-    //         })
-    // })
+    it('subbmitting empty input', () => {
+        request(app).post('/hr/add')
+            .then(res => {
+                const body = res.body;
+                expect(body).toEqual({
+                    first_name: 'First name is required!',
+                    last_name: 'Last name is required!',
+                    email: 'Email field is required!',
+                    password: 'Password must be atleast 6 charecters!',
+                    cpassword: 'confirm password!',
+                    dob: 'Date of Birth is required!',
+                    hr_no: 'Hr number is required!',
+                    permission: 'permission not defined!'
+                });
+            })
+    })
 
     it('expected success!', (done) => {
         request(app).post('/hr/add')
