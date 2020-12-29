@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`hr route expected success! 1`] = `
+Object {
+  "__v": 0,
+  "_id": "5feb1f67ea02b842f84c6c56",
+  "added_by": "5feb12e47393bd30b043e462",
+  "date_added": "2020-12-29T12:21:59.225Z",
+  "dob": "1995-12-12T00:00:00.000Z",
+  "email": "testuser1@gmail.com",
+  "first_name": "testuser1",
+  "hr_no": 101,
+  "last_name": "testuser1",
+  "password": "$2a$10$vWqWKZd9VoOLQ7p9UXAE4ObtDfgBNP0P9lHaOpjFdzEtMSL2XQPpC",
+  "permission": "tester",
+}
+`;
+
 exports[`hr route subbmitting empty input 1`] = `
 Object {
   "cpassword": "confirm password!",
@@ -12,4 +28,3 @@ Object {
   "permission": "permission not defined!",
 }
 `;
-

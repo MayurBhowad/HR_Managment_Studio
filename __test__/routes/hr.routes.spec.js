@@ -52,22 +52,25 @@ describe('hr route', () => {
             })
     })
 
-    // it('expected success!', (done) => {
-    //     request(app).post('/hr/add').set('Authorization', token)
-    //         .send({
-    //             // added_by: testerId,
-    //             first_name: 'testuser1',
-    //             last_name: 'testuser1',
-    //             email: 'testuser1@gmail.com',
-    //             password: '123456',
-    //             cpassword: '123456',
-    //             dob: '1995-12-12',
-    //             hr_no: '101',
-    //             permission: 'tester'
-    //         }).then(res => {
-    //             const body = res.body;
-    //             expect(body).toMatchSnapshot();
-    //             done();
-    //         })
-    // })
+    it('expected success!', (done) => {
+        request(app).post('/hr/add').set('Authorization', token)
+            .send({
+                // added_by: testerId,
+                first_name: 'testuser1',
+                last_name: 'testuser1',
+                email: 'testuser1@gmail.com',
+                password: '123456',
+                cpassword: '123456',
+                dob: '1995-12-12',
+                hr_no: '101',
+                permission: 'tester'
+            }).then(res => {
+                const body = res.body;
+                expect(body.added_by).toEqual('5feb12e47393bd30b043e462');
+                expect(body.email).toEqual('testuser1@gmail.com');
+                expect(body.hr_no).toEqual(101);
+                expect(body.permission).toEqual('tester');
+                done();
+            })
+    })
 })
