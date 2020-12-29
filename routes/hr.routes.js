@@ -23,56 +23,60 @@ router.get('/testing', (req, res) => {
 //@route    POST /hr/add
 //@desc     Add new hr 
 //@access   private
-router.post('/add', (req, res) => {
-    const { errors, isValid } = ValidateAddHrInputs(req.body);
+router.post('/add',
+    passport.authenticate('jwts', { session: false }),
+    (req, res) => {
+        const { errors, isValid } = ValidateAddHrInputs(req.body);
 
-    //Check validation
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
+        //Check validation
+        if (!isValid) {
+            return res.status(400).json(errors);
+        }
 
-    let added_by = req.body.added_by;
+        let added_by = req.user.id;
+        // let added_by = req.body.added_by;
 
-    HR.findOne({ _id: added_by })
-        .then(hr => {
-            if (hr.permission !== 'admin') {
-                res.status(400).json({ message: 'Not Authorized!' })
-            } else {
-                addHr();
-            }
-        })
-
-    const addHr = () => {
-        HR.findOne({ hr_no: req.body.hr_no })
+        HR.findOne({ _id: added_by })
             .then(hr => {
-                if (hr) {
-                    errors.hr_no = 'hr with this number already added!'
-                    res.status(400).json(errors);
+                if (hr.permission !== 'admin') {
+                    res.status(400).json({ message: 'Not Authorized!' })
                 } else {
-
-                    let newHr = new HR({
-                        first_name: req.body.first_name,
-                        last_name: req.body.last_name,
-                        email: req.body.email,
-                        password: req.body.password,
-                        dob: req.body.dob,
-                        hr_no: req.body.hr_no,
-                        permission: req.body.permission,
-                    });
-
-                    bcrypt.genSalt(10, ((err, salt) => {
-                        bcrypt.hash(newHr.password, salt, (err, hash) => {
-                            if (err) throw err;
-                            newHr.password = hash;
-                            newHr.save()
-                                .then(hr => res.status(200).json(hr))
-                                .catch(err => console.log(err));
-                        })
-                    }))
+                    addHr();
                 }
             })
-    }
-})
+
+        const addHr = () => {
+            HR.findOne({ hr_no: req.body.hr_no })
+                .then(hr => {
+                    if (hr) {
+                        errors.hr_no = 'hr with this number already added!'
+                        res.status(400).json(errors);
+                    } else {
+
+                        let newHr = new HR({
+                            added_by: added_by,
+                            first_name: req.body.first_name,
+                            last_name: req.body.last_name,
+                            email: req.body.email,
+                            password: req.body.password,
+                            dob: req.body.dob,
+                            hr_no: req.body.hr_no,
+                            permission: req.body.permission,
+                        });
+
+                        bcrypt.genSalt(10, ((err, salt) => {
+                            bcrypt.hash(newHr.password, salt, (err, hash) => {
+                                if (err) throw err;
+                                newHr.password = hash;
+                                newHr.save()
+                                    .then(hr => res.status(200).json(hr))
+                                    .catch(err => console.log(err));
+                            })
+                        }))
+                    }
+                })
+        }
+    })
 
 //@route    POST /hr/change_password
 //@desc     change hr password 

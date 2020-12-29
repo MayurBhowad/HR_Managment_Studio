@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hr route subbmitting empty input 1`] = `
+Object {
+  "cpassword": "confirm password!",
+  "dob": "Date of Birth is required!",
+  "email": "Email field is required!",
+  "first_name": "First name is required!",
+  "hr_no": "Hr number is required!",
+  "last_name": "Last name is required!",
+  "password": "Password must be atleast 6 charecters!",
+  "permission": "permission not defined!",
+}
+`;
+

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const HR = require('./models/hr.model');
 
 const DB_URI = require('../config/keys.config').MONGO_URI;
 
@@ -16,5 +17,9 @@ const close = () => {
     return mongoose.disconnect();
 }
 
+const dropHrCollection = () => {
+    return HR.remove({ "email": { $nin: ["nick@gmail.com"] } });
+}
 
-module.exports = { connect, close };
+
+module.exports = { connect, close, dropHrCollection };
