@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const passport = require('passport')
+const passport = require('passport');
+const dotenv = require('dotenv');
+dotenv.config();
 //Body Parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
