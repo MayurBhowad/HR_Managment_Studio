@@ -15,9 +15,12 @@ jobs:
       - uses: actions/setup-node@v1
 
       - name: 'setup env config'
-        env:
-          MONGO_URI: ${{secrets.MONGO_URI}}
-          SECRET_OR_KEY: ${{secrets.SECRET_OR_KEY}}
+        run: |
+          touch .env
+          echo MONGO_URI = ${{secrets.MONGO_URI}} >> .env
+          echo SECRET_OR_KEY= ${{secrets.SECRET_OR_KEY}} >> .env
+          
+          
 
       - name: install packages
         id: package_installation
