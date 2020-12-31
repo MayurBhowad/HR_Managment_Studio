@@ -1,0 +1,30 @@
+name: Full test of StackHack_2_0
+
+on:
+  push:
+    branches:
+      - developer
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+
+      - name: install packages
+        id: package_installation
+        run: npm i && cd client && npm i
+
+      - name: testing api
+        id: api_testing
+        run: npm run test-server
+
+      - name: testing client
+        id: client_testing
+        run: cd client && npm test
+
+      - name: check on failure
+        if: steps.api_testing.outputs.status == 'failure' || steps.client_testing.outputs.status == 'failure'
+        run: exit 1
