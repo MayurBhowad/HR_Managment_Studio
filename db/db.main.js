@@ -14,7 +14,7 @@ const connect = () => {
 }
 
 const close = () => {
-    return mongoose.disconnect();
+    return mongoose.connection.close();
 }
 
 const dropHrCollection = () => {

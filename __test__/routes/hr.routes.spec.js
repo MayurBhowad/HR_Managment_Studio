@@ -17,8 +17,11 @@ describe('hr route', () => {
     })
     afterAll((done) => {
         conn.dropHrCollection()
-            .then(() => done())
-            .catch(err => done(err));
+            .then(() => {
+                conn.close().then(() => done())
+                    .catch(err => { console.log(err); done(err) });
+            })
+            .catch(err => { console.log(err); done(err) });
     });
 
 
