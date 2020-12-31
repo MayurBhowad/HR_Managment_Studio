@@ -2,6 +2,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import App from './App';
 
 afterEach(cleanup)
+// afterAll(process.exit())
 
 test('renders learn react link', () => {
   render(<App />);
