@@ -2,19 +2,17 @@ const request = require('supertest');
 
 const app = require('../../app.main');
 const conn = require('../../db/db.main');
+const dotenv = require('dotenv');
 
-const HR = require('../../db/models/hr.model');
+dotenv.config();
+// const HR = require('../../db/models/hr.model');
 
 
 
 describe('hr route', () => {
-    let testerId;
-    let token;
+    var token;
     beforeAll((done) => {
         process.env.NODE_ENV = 'test';
-        console.log(process.env.NODE_ENV);
-        console.log(process.env.MONGO_URI);
-        console.log(process.env.SECRET_OR_KEY);
         conn.connect()
             .then(() => {
                 done();
@@ -24,12 +22,14 @@ describe('hr route', () => {
     afterAll((done) => {
         conn.dropHrCollection()
             .then(() => {
-                conn.close().then(() => done())
-                    .catch(err => { console.log(err); done(err) });
+                conn.close()
+                    .then(() => done())
+                    .catch(err => { console.log('line:28:', err); done(err) });
             })
-            .catch(err => { console.log(err); done(err) });
+            .catch(err => { console.log('line:30:', err); done(err) });
+        // mongoose.connection.close();
+        // done();
     });
-
 
     it('login test', (done) => {
         request(app).post('/hr/login')
