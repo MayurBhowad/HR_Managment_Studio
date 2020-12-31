@@ -13,13 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-
-      - name: 'setup env config'
-        run: |
-          touch .env
-          echo MONGO_URI = ${{secrets.MONGO_URI}} >> .env
-          echo SECRET_OR_KEY= ${{secrets.SECRET_OR_KEY}} >> .env
-          
           
 
       - name: install packages
@@ -28,6 +21,9 @@ jobs:
 
       - name: testing api
         id: api_testing
+        env:
+          MONGO_URI: ${{secrets.MONGO_URI}}
+          SECRET_OR_KEY: ${{secrets.SECRET_OR_KEY}}
         run: npm run test-server
 
       - name: testing client
