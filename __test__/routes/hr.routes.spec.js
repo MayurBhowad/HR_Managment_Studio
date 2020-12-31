@@ -5,10 +5,14 @@ const conn = require('../../db/db.main');
 
 const HR = require('../../db/models/hr.model');
 
+
+
 describe('hr route', () => {
     let testerId;
     let token;
     beforeAll((done) => {
+        process.env.NODE_ENV = 'test';
+        console.log(process.env.NODE_ENV);
         conn.connect()
             .then(() => {
                 done();

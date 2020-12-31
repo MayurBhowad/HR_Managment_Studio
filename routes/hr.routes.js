@@ -35,7 +35,6 @@ router.post('/add',
 
         let added_by = req.user.id;
         // let added_by = req.body.added_by;
-
         HR.findOne({ _id: added_by })
             .then(hr => {
                 if (hr.permission !== 'admin') {
